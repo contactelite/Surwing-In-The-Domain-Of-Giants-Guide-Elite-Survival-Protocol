@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMAIN OF GIANTS | Elite Survival Protocol</title>
+    
+    <meta name="description" content="The definitive tactical guide for survival in Australian crocodile territory. Elite Edition.">
+    <link rel="icon" href="/img/favicon-aligato.ico">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #FF4500; /* Alert Orange */
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-color: #E0E0E0;
+            --neon-green: #39FF14; /* Tactical Neon Green */
+            --danger-red: #FF0000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER / HERO SECTION */
+        header {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('capa.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tagline {
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            text-transform: uppercase;
+            color: var(--primary-color);
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+            max-width: 950px;
+        }
+
+        .hero-img {
+            max-width: 400px;
+            width: 75%;
+            height: auto;
+            margin: 40px 0;
+            filter: drop-shadow(0 0 25px rgba(255, 69, 0, 0.4));
+            animation: float 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-img:hover { transform: scale(1.03); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .sub-headline {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-style: italic;
+            color: #fff;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+        }
+
+        .highlight-box {
+            background: rgba(255, 69, 0, 0.05);
+            border: 1px solid rgba(255, 69, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        /* MODULE GRID RESPONSIVE */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 25px;
+            border-left: 4px solid var(--primary-color);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            border-left-color: var(--neon-green);
+            transform: translateX(10px);
+            background: #1a1a1a;
+        }
+
+        .card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        /* TACTICAL ACCORDION */
+        .accordion-item {
+            background: #111;
+            border: 1px solid #222;
+            margin: 15px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 20px;
+            background: #111;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            text-align: left;
+        }
+
+        .accordion-header h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.4rem;
+        }
+
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s;
+        }
+
+        .arrow-icon::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-right: 3px solid var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            transform: rotate(-45deg);
+        }
+
+        .accordion-item.active .arrow-icon { transform: rotate(45deg); }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #0d0d0d;
+        }
+
+        .accordion-content ul {
+            list-style: none;
+            padding: 0 25px 20px 25px;
+        }
+
+        .accordion-content li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        .accordion-content li::before {
+            content: ">>";
+            margin-right: 12px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: #0a0a0a;
+            border: 2px dashed var(--primary-color);
+            margin-top: 60px;
+            border-radius: 10px;
+        }
+
+        .price-tag {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 20px 40px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+            animation: pulseOrange 2s infinite;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+            outline: 2px solid var(--neon-green);
+        }
+
+        /* BACK TO TOP BUTTON */
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 9999;
+        }
+
+        .back-to-top.show { visibility: visible; opacity: 1; }
+
+        .back-to-top::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-left: 3px solid var(--primary-color);
+            border-top: 3px solid var(--primary-color);
+            transform: rotate(45deg);
+            margin-top: 5px;
+        }
+
+        @keyframes pulseOrange {
+            0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: #444;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @media (min-width: 768px) {
+            .btn { width: auto; }
+            .container { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()"></div>
+
+    <header>
+        <p class="tagline">The Elite Survivor Protocol</p>
+        <h1>SURVIVING IN THE DOMAIN OF GIANTS</h1>
+        <p style="margin-top:20px; color:#bbb; max-width: 650px;">
+            The predator has a plan for you. Do you have one for it?
+        </p>
+        <img src="/img/capa.jpg" alt="Elite Edition Survival Manual" class="hero-img" id="heroCapa">
+    </header>
+
+    <div class="container">
+        <div class="reveal">
+            <p class="sub-headline">
+                This is not a travel guide. This is a map to the impossible, forged for those who refuse to be a statistic.
+            </p>
+            <p>Nature is sovereign. In the Australian domain, silence is your only warning before 200 million years of evolution strikes.</p>
+            
+            <div class="highlight-box">
+                <h4 style="color:var(--primary-color); font-family:'Bebas Neue'; font-size:1.5rem;">TACTICAL DATA:</h4>
+                <p>A Saltie's bite force is **3,700 PSI**. It can cover 5 metres in **1/3 of a second**. Most die because they rely on common myths like "zig-zagging."</p>
+            </div>
+        </div>
+
+        <h2 style="font-family:'Bebas Neue'; font-size:2.8rem; margin: 60px 0 30px; text-align:center;" class="reveal">
+            ⚡ THE SURVIVOR'S CODE OF HONOUR
+        </h2>
+        
+        <div class="grid">
+            <div class="card reveal">
+                <h3>VIGILANCE</h3>
+                <p>Decoding patterns and situational awareness. Prevention through strategic intelligence.</p>
+            </div>
+            <div class="card reveal">
+                <h3>COMBAT</h3>
+                <p>Lethal counter-attacks. Target the eyes and force the palatal valve open.</p>
+            </div>
+            <div class="card reveal">
+                <h3>RECOVERY</h3>
+                <p>The "Blood Barrier" protocol. Tactical tourniquets and bacterial surveillance (Aeromonas).</p>
+            </div>
+            <div class="card reveal">
+                <h3>ALCHEMY</h3>
+                <p>Restoring the mind. Converting paralyzing fear into sharp, useful vigilance.</p>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <h2 style="font-family:'Bebas Neue'; font-size:2.2rem; margin-bottom:20px;">WHAT IS INSIDE THE PROTOCOL?</h2>
+            
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAcc(this)">
+                    <h3>THE INVISIBLE PROTOCOL</h3>
+                    <div class="arrow-icon"></div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li>The 5-Metre Boundary (The Death Zone).</li>
+                        <li>Breaking the Hunting Pattern: Becoming unpredictable.</li>
+                        <li>360° Systematic Scanning of the environment.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAcc(this)">
+                    <h3>THE FINAL ENGAGEMENT</h3>
+                    <div class="arrow-icon"></div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li>Linear Escape: Why running straight saves lives.</li>
+                        <li>Underwater Warfare: Forcing the palatal valve.</li>
+                        <li>Initial Strike Dynamics: Surviving the first 90% of energy.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAcc(this)">
+                    <h3>EMERGENCY EXTRACTION</h3>
+                    <div class="arrow-icon"></div>
+                </button>
+                <div class="accordion-content">
+                    <ul>
+                        <li>Blood Barrier: Tourniquet application (0-90 sec rule).</li>
+                        <li>Aeromonas & Vibrio: Demanding the right medical treatment.</li>
+                        <li>Rescue Logistics: Global (112) and Australian (000) coordination. </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section reveal" id="downloadSection">
+            <h2 style="font-family:'Bebas Neue'; font-size:2.8rem;">SECURE YOUR SURVIVAL LEGACY</h2>
+            <p>Digital Manual + Pocket Checklist + Medical Rescue Protocol</p>
+            <div class="price-tag">R$9.99 </div>
+            
+            <button class="btn" id="btnCheckout" onclick="checkout()">DOWNLOAD PROTOCOL NOW</button>
+            
+            <p style="margin-top:20px; font-size:0.9rem; color:#666; font-family:monospace;">
+                ENCRYPTION: 9055-4763-ELITE-AU
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>100% PRIVATE. TESTED BY REALITY. SURVIVOR'S SEAL SECURED.</p>
+        <p>© SENTINEL UNIT FIELD COMMAND</p>
+    </footer>
+
+    <script>
+        // REDIRECT AND BUTTON FEEDBACK
+        function checkout() {
+            const btn = document.getElementById('btnCheckout');
+            btn.innerHTML = "AUTHENTICATING...";
+            btn.style.backgroundColor = "#39FF14";
+            btn.style.color = "#000";
+            
+            setTimeout(() => {
+                window.location.href = "https://pay.kirvano.com/c77abac1-fcef-4647-9a68-b047241f6c98";
+            }, 800);
+        }
+
+        // SCROLL REVEAL LOGIC
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 80) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        // BACK TO TOP LOGIC
+        const backToTopBtn = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+            reveal();
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // IMAGE CLICK TO SCROLL
+        document.getElementById('heroCapa').addEventListener('click', function() {
+            document.getElementById('downloadSection').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+
+        window.addEventListener("scroll", reveal);
+        reveal(); // Initial run
+
+        // ACCORDION LOGIC
+        function toggleAcc(btn) {
+            const item = btn.parentElement;
+            const content = btn.nextElementSibling;
+            
+            if (item.classList.contains("active")) {
+                item.classList.remove("active");
+                content.style.maxHeight = null;
+            } else {
+                // Close others
+                document.querySelectorAll('.accordion-item').forEach(el => {
+                    el.classList.remove('active');
+                    el.querySelector('.accordion-content').style.maxHeight = null;
+                });
+                
+                item.classList.add("active");
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        console.log("SENTINEL SYSTEM ACTIVE: LOGIC SECURED [9055-4763]");
+    </script>
+</body>
+</html>
